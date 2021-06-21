@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Questions{% endblock %}
+
+{% block body %}
+    <style>
+        .questionsLink:after {
+            content: "";
+            width: 100%;
+            height: 3px;
+            background-color: #fff;
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+        }
+
+        .titleText {
+            text-align: center;
+            margin: 30px 0 20px;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .createForm {
+            width: 400px;
+            margin: 0 auto;
+        }
+
+        .labelTitle, .labelText, .labelCategory {
+            font-size: 17px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .inputTitle, .inputText, .inputCategory {
+            margin-bottom: 10px;
+            border: none;
+        }
+
+        .btnSave {
+            padding: 10px 50px;
+            font-size: 19px;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            margin-top: 10px;
+            text-align:center;
+            border: none;
+            background-size: 300% 100%;
+
+            border-radius: 30px;
+            moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+            -webkit-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+
+            background-image: linear-gradient(to right, #dc5367, #e48839, #ca8234, #dc5367);
+            box-shadow: 0 4px 15px 0 rgba(230, 85, 91, 0.75);
+        }
+
+        .btnSave:hover {
+            background-position: 100% 0;
+            moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+            -webkit-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+        }
+
+        .btnSave:focus {
+            outline: none;
+        }
+
+        .backToList {
+            font-size: 18px;
+            display: block;
+            margin-top: 18px;
+            color: #37c8ff;
+        }
+
+        .backToList:hover {
+            color: #4596ff;
+        }
+    </style>
+    <h1 class="titleText">Создать новой вопрос</h1>
+
+    {{ form_start(form, {'attr': {'class': 'createForm'}}) }}
+    {{ form_label(form.title, 'Заголовок', {'label_attr': {'class': 'labelTitle'}}) }}
+        {{ form_widget(form.title, {'attr': {'class': 'inputTitle'}}) }}
+    {{ form_label(form.text, 'Текст', {'label_attr': {'class': 'labelText'}}) }}
+        {{ form_widget(form.text, {'attr': {'class': 'inputText'}}) }}
+    {{ form_label(form.category, 'Категория', {'label_attr': {'class': 'labelCategory'}}) }}
+{#        {{ form_widget(form.category, {'attr': {'class': 'inputCategory'}}) }}#}
+    {{ form_widget(form.category, {'attr': {'class': 'inputCategory'}}) }}
+    <datalist id="category">
+        <option value="Образование">
+        <option value="Литература">
+        <option value="Психология">
+        <option value="Животные">
+        <option value="Искусство">
+        <option value="Фильмы">
+    </datalist>
+        <button class="btnSave">{{ button_label|default('Создать') }}</button>
+    <a href="{{ path('questions_index') }}" class="backToList">Назад к списку вопросов</a>
+    {{ form_end(form) }}
+{% endblock %}

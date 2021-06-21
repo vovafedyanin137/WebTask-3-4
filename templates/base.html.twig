@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <style>
+            a {
+                text-decoration: none;
+            }
+
+            a:hover {
+                text-decoration: none;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+                background-color: #36404A;
+            }
+
+            #sidebar {
+                width: 100%;
+                background-color: #181818;
+                position: fixed;
+                z-index: 10;
+                top: 0;
+            }
+
+            #sidebar ul {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                list-style: none;
+                margin: 0;
+                padding: 10px 20px;
+            }
+
+            .aboutLink, .questionsLink {
+                color: #ffffff;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            .aboutLink:hover, .questionsLink:hover {
+                color: #a5abab;
+            }
+
+            .aboutLink {
+                margin-right: 20px;
+            }
+
+            #sidebar ul div {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+            }
+
+            .logout {
+                margin-left: 50px;
+                padding: 5px 20px;
+                font-size: 22px;
+                color: #fff;
+                transition: .3s;
+                background-color: #ff3a3a;
+            }
+
+            .logout:hover {
+                background-color: #ea0000;
+                color: #fff;
+                transition: .3s;
+            }
+
+            .outName {
+                color: #4efb5b;
+                font-size: 20px;
+                font-weight: bold;
+            }
+            
+            #sidebar a {
+                position: relative;
+            }
+
+            .login, .register {
+                color: #ffffff;
+                font-size: 24px;
+                font-weight: bold;
+            }
+
+            .login:hover, .register:hover {
+                color: #5a6d7a;
+            }
+
+            .login {
+                margin-right: 30px;
+            }
+
+            .adminLink {
+                color: rgb(115,45,255);
+                font-size: 28px;
+                margin-left: 100px;
+                font-weight: bold;
+
+                background: linear-gradient(77deg, rgba(115,45,255,1) 0%, rgba(184,28,255,1) 50%, rgba(255,0,206,1) 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            body {
+                padding-top: 70px;
+            }
+        </style>
+    </head>
+    <body>
+    <div id="sidebar">
+        {% block sidebar %}
+            <ul>
+                <div>
+                    <li><a href="/about" class="aboutLink">О сайте</a></li>
+                    <li><a href="/questions" class="questionsLink">Вопросы</a></li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <li><a href="/admin" class="adminLink">Админ панель</a></li>
+                    {% endif %}
+                </div>
+                <div>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li class="outName">Привет! {{ app.user.name }}</li>
+                        <li><a href="/logout" class="logout">Выход</a></li>
+                    {% else %}
+                        <li><a href="/login" class="login">Войти</a></li>
+                        <li><a href="/register" class="register">Регистрация</a></li>
+                    {% endif %}
+                </div>
+            </ul>
+        {% endblock %}
+    </div>
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

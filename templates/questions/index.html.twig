@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Вопросы{% endblock %}
+
+{% block body %}
+    <style>
+        .questionsLink:after {
+            content: "";
+            width: 100%;
+            height: 3px;
+            background-color: #fff;
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+        }
+
+        .titleText {
+            color: #fff;
+            margin: 30px 0;
+        }
+
+        .block-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .date_output {
+            color: #ff3838;
+            font-weight: bold;
+        }
+
+        .card {
+            margin-right: 30px;
+            margin-bottom: 30px;
+            width: 15rem;
+        }
+
+        .createNew {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #00d41a;
+            padding: 10px 30px;
+            border-radius: 30px;
+            color: #fff;
+            font-weight: bold;
+            font-size: 16px;
+            text-decoration: none;
+            top: 0;
+            left: 250px;
+        }
+
+        .createNew:hover {
+            text-decoration: none;
+            background-color: #18f332;
+            color: #fff;
+        }
+
+        .blockSuccess {
+            border: 3px solid #1bff00;
+            display: inline-block;
+            padding: 5px 10px;
+            color: #1bff00;
+            margin-bottom: 20px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .container {
+            position: relative;
+        }
+
+        .block-center {
+            padding-bottom: 0;
+            padding-top: 0;
+            text-align: center;
+        }
+
+        .btnGo {
+            box-shadow: 5px 5px 8px 1px #00000080;
+            transition: .3s;
+        }
+
+        .btnGo:hover {
+            box-shadow: none;
+            transition: .3s;
+        }
+        </style>
+
+    <div class="container">
+        <h1 class="titleText">Вопросы:</h1>
+        <div class="row">
+            {% for question in questions %}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{ question.title }}</h5>
+                </div>
+                <div class="card-body block-center">
+                    <p class="card-text">Количество ответов: {{ question.answers | length }}</p>
+                </div>
+                <div class="card-body block-bottom">
+                    <a href="{{ path('questions_show', {'id': question.id}) }}" class="btn btn-primary btnGo">Перейти</a>
+                    <div class="date_output">{{ question.date ? question.date|date('Y-m-d') : '' }}</div>
+                </div>
+            </div>
+        {% else %}
+            <div>Нет вопросов!</div>
+            {% endfor %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a href="{{ path('questions_new') }}" class="createNew">Задать новый вопрос</a>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

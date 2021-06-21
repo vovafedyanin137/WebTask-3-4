@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Answers{% endblock %}
+
+{% block body %}
+    <h1>Answers</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ answer.id }}</td>
+            </tr>
+            <tr>
+                <th>Answer_text</th>
+                <td>{{ answer.answerText }}</td>
+            </tr>
+            <tr>
+                <th>Answer_date</th>
+                <td>{{ answer.answerDate ? answer.answerDate|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('answers_index') }}">back to list</a>
+{% endblock %}
